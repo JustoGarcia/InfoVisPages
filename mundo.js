@@ -1,3 +1,5 @@
+const myPlot = document.getElementById('myMap');
+
 const coasterDataSorted = coasterData.slice().sort((a, b) => b.Speed - a.Speed);
 const velocidad = coasterDataSorted.map(item => item.Speed);
 const lon = coasterDataSorted.map(item => item.Lon);
