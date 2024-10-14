@@ -1,25 +1,34 @@
 * {
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 
 #myMap {
-    position: absolute;
+    position: relative;
     left: 50%; /* Centrar horizontalmente */
-    top: 100px;
     transform: translateX(-50%); /* Ajuste para centrar */
     margin-top: 0;
+
+
+}
+#context {
+    position: absolute;
+    /* pointer-events: none; hace que el contexto (imagen SVG) sea "transparente" a los eventos del usuario,
+    permitiendo que los elementos interactivos debajo (el mapa de Chile) sigan respondiendo a los eventos.
+    Sin embargo, la imagen sigue siendo visible */
+    pointer-events: none;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    transition: 500ms ease all;
 }
 
 #myGraph {
-    position: absolute;
+    position: relative;
     left: 50%;
-    top: 100px;
     transform: translateX(-50%);
-    margin-top: 500px;
-    border: 2px solid red; /* Borde para depurar */
-    width: 500px; /* Ajusta el tamaño según tus necesidades */
-    height: 500px;
+
 }
 
 #details {
@@ -35,12 +44,13 @@
     justify-content: center; /* Centrar horizontalmente */
     position: relative; /* Cambiar a relativo */
     margin-bottom: 0;
+
 }
 
 h1 {
     font-size: 50px;
     font-weight: 200;
-    color: #777;
+    color: #777777;
 }
 
 span {

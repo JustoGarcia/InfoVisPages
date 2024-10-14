@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Las montañas rusas más rápidas del mundo</title>
 
-    <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Enlace a la biblioteca Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script charset="UTF-8" src="coaster_db.js"></script>
+
 </head>
 <body>
     <div id='title'>
-        <h1>Las montañas rusas más rápidas del mundo</h1>
+        <h1>¿Dónde están las montañas rusas más rápidas del mundo?</h1>
     </div>
-    <div id='myMap'></div>
-    <div id='myGraph'></div>
-
-    <!-- Enlace a los archivos JavaScript -->
-    <script defer src="coaster_db.js"></script>
-    <script defer src="mundo.js"></script>
-    <script defer src="grafico.js"></script>
+    <div id='myMap'><img id="context" src="dibujo.svg" /> </div>
+    
 </body>
 </html>
+<script defer src="mundo.js"></script>
