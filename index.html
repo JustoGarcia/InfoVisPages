@@ -11,20 +11,30 @@
     <!-- Enlace a la biblioteca Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-    <!-- Enlace al archivo JavaScript -->
-    <script charset="UTF-8" src="coaster_db.js"></script>
-
+    <!-- Enlace a la base de datos -->
+    <script src="coaster_db.js"></script>
 </head>
 <body>
-    <div id='title'>
+    <div id="title">
         <h1>¿Dónde están las montañas rusas más rápidas del mundo?</h1>
     </div>
-    <div id='myMap'><img id="context" src="dibujo.svg" /> </div>
-    
-    
-
-    
-    
+    <div id="controls">
+        <label for="continentSelect">Selecciona un continente:</label>
+        <select id="continentSelect">
+            <option value="World">Todos</option>
+            <option value="north america">América del Norte</option>
+            <option value="south america">América del Sur</option>
+            <option value="europe">Europa</option>
+            <option value="asia">Asia</option>
+            <option value="africa">África</option>
+            <option value="oceania">Oceanía</option>
+        </select>
+    </div>
+    <div id="mapContainer">
+        <div id="myMap"></div>
+        <img id="context" src="dibujo.svg" />
+    </div>
 </body>
 </html>
+
 <script defer src="mundo.js"></script>

@@ -2,14 +2,23 @@
     font-family: Arial, sans-serif;
 }
 
-
 #myMap {
     position: relative;
     left: 50%; /* Centrar horizontalmente */
     transform: translateX(-50%); /* Ajuste para centrar */
     margin-top: 0;
+}
 
-
+#controls {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+}
+#mapContainer {
+    width: 1200px;  /* Ajusta según tus necesidades */
+    height: 4500px; /* Ajusta según tus necesidades */
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 }
 #context {
     position: absolute;
