@@ -7,11 +7,9 @@ function updateMap(continent) {
 
     // Filtrar datos según el continente o "World"
     if (continent === "World") {
-        // Mostrar las 10 montañas rusas más rápidas del mundo
         filteredData = coasterData.slice().sort((a, b) => b.Speed - a.Speed);
         svgImage.style.display = "block"; // Mostrar la imagen SVG
     } else {
-        // Filtrar las 10 montañas rusas más rápidas del continente seleccionado
         filteredData = coasterData
             .filter(coaster => coaster.Continent === continent)
             .sort((a, b) => b.Speed - a.Speed)
@@ -28,26 +26,19 @@ function updateMap(continent) {
     let speedFactor;
     switch (continent) {
         case "north america":
-            speedFactor = 0.2; // Aumenta el factor de velocidad para Norteamérica
-            break;
+            speedFactor = 0.2; break;
         case "south america":
-            speedFactor = 0.35; // Aumenta el factor de velocidad para Sudamérica
-            break;
+            speedFactor = 0.35; break;
         case "oceania":
-            speedFactor = 0.3; // Factor de velocidad para Oceanía
-            break;
+            speedFactor = 0.3; break;
         case "europe":
-            speedFactor = 0.3; // Factor de velocidad para Europa
-            break;
+            speedFactor = 0.3; break;
         case "asia":
-            speedFactor = 0.2 // Factor de velocidad para Asia
-            break;
+            speedFactor = 0.2; break;
         case "africa":
-            speedFactor = 0.4; // Factor de velocidad para África
-            break;
+            speedFactor = 0.4; break;
         default:
-            speedFactor = 0.15; // Factor estándar para otros continentes o el mundo
-            break;
+            speedFactor = 0.15; break;
     }
 
     // Aplicar el factor de escala a cada velocidad
@@ -69,7 +60,8 @@ function updateMap(continent) {
                 size: magnitud,
                 colorscale: [[0, '#fff'], [1, '#000']],
                 line: { color: 'black' }
-            }
+            },
+            customdata: filteredData.map(item => item.Speed) // Añadir la velocidad como customdata
         }
     ];
 
@@ -79,7 +71,6 @@ function updateMap(continent) {
             scope: 'world',
             projection: { type: 'natural earth' },
             showland: false,
-            // showcountries: true,
             borderrwidth: 1,
             showframe: false,
             lataxis: { range: [-60, 90] }
@@ -120,6 +111,13 @@ function updateMap(continent) {
 
     // Renderizar el mapa con los datos y el layout
     Plotly.newPlot(myPlot, data, layout, { scrollZoom: true, displayModeBar: false });
+
+    // Evento para reproducir sonido al hacer clic en un marcador
+    myPlot.on('plotly_click', function(data) {
+        const point = data.points[0];
+        const speed = point.customdata; // Obtiene la velocidad de la montaña rusa
+        playSoundForSpeed(speed); // Llama a la función de sonificación en sonification.js
+    });
 }
 
 // Evento de cambio en el selector de continente
