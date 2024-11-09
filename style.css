@@ -2,17 +2,6 @@
     font-family: Arial, sans-serif;
 }
 
-#myMap {
-    position: relative;
-    left: 50%; /* Centrar horizontalmente */
-    transform: translateX(-50%); /* Ajuste para centrar */
-    margin-top: 0;
-}
-
-#controls {
-    display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-}
 #mapContainer {
     width: 1200px;  /* Ajusta según tus necesidades */
     height: 4500px; /* Ajusta según tus necesidades */
@@ -20,32 +9,50 @@
     position: relative;
     overflow: hidden;
 }
-#context {
-    position: absolute;
-    /* pointer-events: none; hace que el contexto (imagen SVG) sea "transparente" a los eventos del usuario,
-    permitiendo que los elementos interactivos debajo (el mapa de Chile) sigan respondiendo a los eventos.
-    Sin embargo, la imagen sigue siendo visible */
-    pointer-events: none;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
 
-    transition: 500ms ease all;
+#myMap {
+    position: relative;
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar */
+    margin-top: 0;
+    pointer-events: visible;
 }
 
-#myGraph {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+#coastersList h2 {
+    margin-bottom: 15px; /* Espacio debajo del título */
+}
 
+#coastersList div {
+    margin-bottom: 10px; /* Espacio entre nombres */
+}
+
+#coastersList {
+    width: 285px;
+    padding: 2px;
+    overflow-y: auto;
+    font-size: 20px;
+    font-weight: 200;
+    color: #777777;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+
+#controls {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
 }
 
 #details {
-    position: absolute;
-    transition: 500ms ease all;
-    opacity: 0;
-    margin: 0; /* Eliminar márgenes */
-    padding: 0; /* Eliminar padding */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    margin-top: 20px;
+    display: none;  /* Inicialmente está oculto */
+    max-width: 300px; /* Ancho máximo para el contenedor */
+    position: absolute; /* Para que se pueda mover si es necesario */
+    z-index: 10; /* Para asegurarse de que quede encima de otros elementos */
 }
 
 #title {
@@ -67,23 +74,13 @@ span {
     margin-top: 6px;
 }
 
-#nombre {
-    font-size: 18px;
-    font-weight: 800;
-    color: #333;
-}
-
-
-#magnitud {
-    width: 100px;
-    transition: 500ms all ease;
-    height: 100px;
-    border: 1px solid;
-    text-align: center;
-    line-height: 100px;
-    border-radius: 100px;
-    margin-top: 43px;
-    font-size: 20px;
-    background: #881d0f;
-    color: #fff;
+#hoverInfo {
+    width: 220px;
+    padding: 2px;
+    background-color: #f0f0f0;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
 }

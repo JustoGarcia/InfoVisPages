@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,13 +14,6 @@
 
     <!-- Enlace a la base de datos -->
     <script src="coaster_db.js"></script>
-    <!-- Agrega Tone.js para la sonificación -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.min.js"></script>
-    
-
-    <!-- Agrega el script de sonificación -->
-    <script defer src="sonification.js"></script>
-
 </head>
 <body>
     <div id="title">
@@ -39,7 +33,8 @@
     </div>
     <div id="mapContainer">
         <div id="myMap"></div>
-        <img id="context" src="dibujo.svg" />
+        <div id="coastersList"></div>
+        <div id="hoverInfo"></div> <!-- Nuevo contenedor para hoverinfo -->
     </div>
 </body>
 </html>
