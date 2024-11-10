@@ -4,7 +4,6 @@ const coastersList = document.getElementById('coastersList');  // Contenedor de 
 const hoverInfo = document.getElementById('hoverInfo'); // Contenedor de la información al pasar el cursor
 let currentHoverIndex = null; // Variable para rastrear el índice actual de hover
 
-
 function updateMap(continent) {
     let filteredData;
 
@@ -28,17 +27,14 @@ function updateMap(continent) {
 
         // Evento de mouseover para la lista
         listItem.addEventListener('mouseover', () => {
-            // Cambiar color del marcador y mostrar información
             listItem.style.color = 'red';
             highlightMarker(index);
-            
         });
 
         // Evento de mouseout para la lista
         listItem.addEventListener('mouseout', () => {
             listItem.style.color = '';
             resetHighlight();
-            
         });
 
         coastersList.appendChild(listItem);
@@ -82,13 +78,11 @@ function updateMap(continent) {
         }
     ];
 
-    // Configuración específica del layout
     const layout = (continent === "World") ? {
         geo: {
             scope: 'world',
             projection: { type: 'natural earth' },
             showland: false,
-            // showcountries: true,
             borderrwidth: 1,
             showframe: false,
             lataxis: { range: [-60, 90] }
@@ -127,7 +121,6 @@ function updateMap(continent) {
         dragmode: false
     };
 
-
     Plotly.newPlot(myPlot, data, layout, { scrollZoom: true, displayModeBar: false });
 
     // Evento plotly_hover para el mapa
@@ -141,28 +134,31 @@ function updateMap(continent) {
     myPlot.on('plotly_unhover', function() {
         resetHighlight();
     });
-    
+
+    // Evento plotly_click para la sonificación al hacer clic en un marcador
+    myPlot.on('plotly_click', function(data) {
+        const pointIndex = data.points[0].pointIndex;
+        const speed = filteredData[pointIndex].Speed;
+        playSoundForSpeed(speed); // Llama a la función de sonificación con la velocidad específica
+    });
+
     // Función para resaltar marcador y mostrar información
     function highlightMarker(index) {
-        // Verifica si el índice corresponde a un elemento en la lista
         if (listItems[index]) {
-            listItems[index].style.color = 'red'; // Cambia el color del nombre en la lista si existe
+            listItems[index].style.color = 'red';
         }
-        
         const newColors = magnitud.slice();
-        newColors[index] = 'red'; // Cambia el color del marcador en el mapa
+        newColors[index] = 'red';
         Plotly.restyle(myPlot, { 'marker.color': [newColors] });
         hoverInfo.innerHTML = data[0].customdata[index];
     }
-    
+
     // Función para restaurar color de marcadores y limpiar información
     function resetHighlight() {
         if (currentHoverIndex !== null) {
-            // Restaura el color del nombre en la lista si el índice está dentro de listItems
             if (listItems[currentHoverIndex]) {
                 listItems[currentHoverIndex].style.color = '';
             }
-            
             const resetColors = magnitud.slice();
             Plotly.restyle(myPlot, { 'marker.color': [resetColors] });
             hoverInfo.innerHTML = '';
