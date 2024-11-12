@@ -71,7 +71,19 @@ h1 {
 
 span {
     display: block;
+    margin-top: 2px;
+}
+#info{
     margin-top: 6px;
+    color: #777777;
+}
+#infor{
+    margin-top: 6px;
+    color: red;
+}
+h2
+{
+    margin-left: 0.5em;
 }
 
 #hoverInfo {
@@ -84,3 +96,21 @@ span {
     right: 0;
     top: 0;
 }
+
+.ranked-item {
+    display: flex;
+    align-items: flex-start; /* Alinea el texto en la parte superior */
+    font-weight: bold;    
+}
+.rank {
+    width: 2em; /* Ajusta el ancho según necesites */
+    text-align: right;
+    margin-right: 0.5em; /* Espaciado entre número y nombre */
+    flex-shrink: 0; /* Evita que el número se reduzca */
+}
+
+.name {
+    flex: 1; /* Permite que el nombre ocupe el resto del espacio */
+    word-wrap: break-word; /* Asegura que los nombres largos se ajusten */
+}
+

@@ -21,7 +21,12 @@ function updateMap(continent) {
 
     filteredData.slice(0, 10).forEach((coaster, index) => {
         const listItem = document.createElement('div');
-        listItem.innerHTML = `<strong>${index + 1}° ${coaster.coaster_name}</strong>`;
+        listItem.innerHTML = `
+            <div class="ranked-item">
+                <span class="rank">${index + 1}°</span>
+                <span class="name">${coaster.coaster_name}</span>
+            </div>
+        `;
         listItem.classList.add('list-item');
         listItems.push(listItem); // Almacenar referencia del elemento
 
@@ -63,10 +68,10 @@ function updateMap(continent) {
             text: filteredData.map(item => item.coaster_name),
             customdata: filteredData.map((item, index) =>
                 `<b>${item.coaster_name}</b><br>
-                <span style="color: gray;">Ranking:</span> ${index + 1}<br>
-                <span style="color: gray;">Ubicación:</span> ${item.Location}<br>
-                <span style="color: gray;">Parque:</span> ${item.Park}<br>
-                <span style="color: red;">Velocidad:</span> ${item.Speed} km/h`
+                <span id="info">Ranking:</span> ${index + 1}<br>
+                <span id="info">Ubicación:</span> ${item.Location}<br>
+                <span id="info">Parque:</span> ${item.Park}<br>
+                <span id="infor">Velocidad:</span> ${item.Speed} km/h`
             ),
             hoverinfo: 'text',
             marker: {
@@ -128,11 +133,15 @@ function updateMap(continent) {
         const pointIndex = data.points[0].pointIndex;
         currentHoverIndex = pointIndex;
         highlightMarker(pointIndex);
+        // Cambia el cursor a pointer
+        myPlot.style.cursor = 'pointer';
     });
 
     // Evento plotly_unhover para el mapa
     myPlot.on('plotly_unhover', function() {
         resetHighlight();
+        // Restablece el cursor a su estilo predeterminado
+        myPlot.style.cursor = 'default';
     });
 
     // Evento plotly_click para la sonificación al hacer clic en un marcador
