@@ -1,3 +1,8 @@
+// Importar las bibliotecas necesarias
+import Knob from './js/knob.js';
+import Protobject from './js/protobject.js';
+import { narrarYSonificar } from './sonification.js'; // Importar narración y sonificación
+
 // Estilo CSS actualizado para los detalles
 const style = document.createElement('style');
 style.innerHTML = `
@@ -151,14 +156,74 @@ function showDetails(coaster, event) {
   details.style.top = `${topPosition}px`;
 }
 
-
-
-
 // Simulación de enviar datos al Arduino
 function sendDataToArduino(coaster) {
   console.log('Enviando al Arduino:', coaster);
   // Aquí pondrías el código necesario para comunicarte con el Arduino, por ejemplo, usando WebSockets o fetch
 }
+
+// Crear la perilla para control manual (si es necesario)
+const perilla = new Knob({ min: -500, max: 500 });
+
+// Datos de ejemplo de montañas rusas (reemplaza con tus datos reales si no están disponibles globalmente)
+const coasters = [
+    {
+        coaster_name: "Kingda Ka",
+        Speed: 206,
+        Park: "Six Flags Great Adventure",
+        Location: "Jackson, New Jersey, United States",
+    },
+    {
+        coaster_name: "Formula Rossa",
+        Speed: 240,
+        Park: "Ferrari World Abu Dhabi",
+        Location: "Abu Dhabi, United Arab Emirates",
+    },
+    {
+        coaster_name: "Steel Dragon 2000",
+        Speed: 152.9,
+        Park: "Nagashima Spa Land",
+        Location: "Kuwana, Mie, Japan",
+    },
+];
+
+// Crear una lista interactiva para mostrar las montañas rusas
+const coasterListContainer = document.createElement('div');
+coasterListContainer.id = 'coasterList';
+document.body.appendChild(coasterListContainer);
+
+// Función para mostrar las montañas rusas
+function displayCoasters() {
+    coasterListContainer.innerHTML = '<h2>Selecciona una montaña rusa:</h2>';
+    coasters.forEach((coaster, index) => {
+        const coasterItem = document.createElement('div');
+        coasterItem.innerHTML = `<p>${index + 1}. ${coaster.coaster_name} (${coaster.Speed} km/h)</p>`;
+        coasterItem.style.cursor = 'pointer';
+
+        // Añadir evento de clic
+        coasterItem.addEventListener('click', () => {
+            sendSpeedToServo(coaster.Speed); // Enviar velocidad al servo
+            narrarYSonificar(coaster); // Activar narración y sonificación
+        });
+
+        coasterListContainer.appendChild(coasterItem);
+    });
+}
+
+// Función para enviar la velocidad al Arduino
+function sendSpeedToServo(speed) {
+    console.log(`Enviando velocidad: ${speed} al servo`);
+    Protobject.send({ speed }).to('arduino.js'); // Enviar la velocidad al Arduino
+}
+
+// Iniciar la perilla para control manual (opcional)
+perilla.onChange((value) => {
+    console.log(`Control manual: velocidad = ${value}`);
+    Protobject.send({ speed: value }).to('arduino.js');
+});
+
+// Mostrar la lista de montañas rusas al cargar la página
+displayCoasters();
 
 // Llamada inicial para mostrar las montañas rusas
 const coasterData = [
