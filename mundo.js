@@ -36,12 +36,6 @@ function updateMap(continent) {
             highlightMarker(index);
         });
 
-        // Evento de mouseout para la lista
-        listItem.addEventListener('mouseout', () => {
-            listItem.style.color = '';
-            resetHighlight();
-        });
-
         coastersList.appendChild(listItem);
     });
 
@@ -147,8 +141,8 @@ function updateMap(continent) {
     // Evento plotly_click para la sonificación al hacer clic en un marcador
     myPlot.on('plotly_click', function(data) {
         const pointIndex = data.points[0].pointIndex;
-        const speed = filteredData[pointIndex].Speed;
-        playSoundForSpeed(speed); // Llama a la función de sonificación con la velocidad específica
+        const selectedCoaster = filteredData[pointIndex];
+        narrarYSonificar(selectedCoaster); // Combina narración y sonificación
     });
 
     // Función para resaltar marcador y mostrar información
@@ -183,89 +177,3 @@ continentSelect.addEventListener('change', function() {
 
 // Inicializar el mapa con la opción "World"
 updateMap("World");
-
-
-
-
-    // // Configuración específica del layout
-    // const layout = (continent === "World") ? {
-    //     geo: {
-    //         scope: 'world',
-    //         projection: { type: 'natural earth' },
-    //         showland: false,
-    //         // showcountries: true,
-    //         borderrwidth: 1,
-    //         showframe: false,
-    //         lataxis: { range: [-60, 90] }
-    //     },
-    //     margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
-    //     dragmode: false
-    // } : (continent === "oceania") ? {
-    //     geo: {
-    //         scope: 'world',
-    //         projection: { type: 'natural earth' },
-    //         showland: true,
-    //         showcountries: true,
-    //         landcolor: 'rgb(243,243,243)',
-    //         countrycolor: 'rgb(119, 119, 119)',
-    //         countrywidth: 0.5,
-    //         coastlinecolor: 'rgba(0,0,0,0)',
-    //         showframe: false,
-    //         lataxis: { range: [-40, -10] },
-    //         lonaxis: { range: [100, 170] }
-    //     },
-    //     margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
-    //     dragmode: false
-    // } : {
-    //     geo: {
-    //         scope: continent,
-    //         projection: { type: 'natural earth' },
-    //         showland: true,
-    //         showcountries: true,
-    //         landcolor: 'rgb(243,243,243)',
-    //         countrycolor: 'rgb(119, 119, 119)',
-    //         countrywidth: 0.5,
-    //         coastlinecolor: 'rgba(0,0,0,0)',
-    //         showframe: false,
-    //     },
-    //     margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
-    //     dragmode: false
-    // };
-
-
-
-    // const data = [
-    //     {
-    //         type: 'scattergeo',
-    //         mode: 'markers',
-    //         lon: filteredData.map(item => item.Lon),
-    //         lat: filteredData.map(item => item.Lat),
-    //         text: filteredData.map(item => item.coaster_name),
-    //         customdata: filteredData.map(item =>
-    //             `<b>${item.coaster_name}</b><br>
-    //             <span style="color: gray;">Ubicación:</span> ${item.Location}<br>
-    //             <span style="color: gray;">Parque:</span> ${item.Park}<br>
-    //             <span style="color: red;">Velocidad:</span> ${item.Speed} km/h`
-    //         ),
-    //         hoverinfo: 'text',
-    //         marker: {
-    //             color: magnitud,
-    //             size: magnitud,
-    //             colorscale: [[0, '#fff'], [1, '#000']],
-    //             line: { color: 'black' }
-    //         }
-    //     }
-    // ];
-
-    // let speedFactor;
-    // switch (continent) {
-    //     case "north america": speedFactor = 0.2; break;
-    //     case "south america": speedFactor = 0.35; break;
-    //     case "oceania": speedFactor = 0.3; break;
-    //     case "europe": speedFactor = 0.3; break;
-    //     case "asia": speedFactor = 0.2; break;
-    //     case "africa": speedFactor = 0.4; break;
-    //     default: speedFactor = 0.15; break;
-    // }
-
-    // const magnitud = filteredData.map(item => item.Speed * speedFactor);

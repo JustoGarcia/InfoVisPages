@@ -13,7 +13,7 @@ function mapSpeedToFrequency(speed) {
 }
 
 // Reproduce un sonido con efecto Doppler basado en la velocidad proporcionada usando Web Audio API
-function playSoundForSpeed(speed) {
+function playSoundForSpeed(speed, onComplete) {
     const frequency = mapSpeedToFrequency(speed);
 
     // Crear contexto de audio
@@ -45,4 +45,28 @@ function playSoundForSpeed(speed) {
 
     // Detener el oscilador después de que el sonido se desvanece
     oscillator.stop(audioContext.currentTime + 0.8);
+
+    // Llamar a la función `onComplete` después de que el sonido termina
+    setTimeout(() => {
+        if (onComplete) onComplete();
+    }, 800); // 800 ms corresponde a la duración del sonido
+}
+
+// Narrar los datos de una montaña rusa seleccionada
+function narrarDatos(coaster) {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(
+        `Has seleccionado la montaña rusa ${coaster.coaster_name}. Está ubicada en ${coaster.Location}, en el parque ${coaster.Park}. 
+        Su velocidad máxima es de ${coaster.Speed} kilómetros por hora.`
+    );
+    synth.speak(utterance);
+}
+
+// Función principal para combinar sonificación y narración
+function narrarYSonificar(coaster) {
+    // Primero, reproducir el sonido basado en la velocidad
+    playSoundForSpeed(coaster.Speed, () => {
+        // Después, narrar los datos de la montaña rusa seleccionada
+        narrarDatos(coaster);
+    });
 }
