@@ -35,6 +35,11 @@ function updateMap(continent) {
             listItem.style.color = 'red';
             highlightMarker(index);
         });
+        // Evento de mouseout para la lista
+        listItem.addEventListener('mouseout', () => {
+            listItem.style.color = '';
+            resetHighlight();
+        });
 
         coastersList.appendChild(listItem);
     });
